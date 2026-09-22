@@ -1,0 +1,23 @@
+.settings-option {
+  display: grid;
+  gap: 8px;
+  color: #354052;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.settings-option input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  outline: 0;
+  background: #eff3f7;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.settings-option input:focus {
+  box-shadow: 0 0 0 2px rgba(13, 165, 112, 0.2);
+}

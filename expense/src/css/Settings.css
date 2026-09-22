@@ -1,0 +1,18 @@
+.settings-page {
+  max-width: 560px;
+}
+
+.settings-panel {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.settings-panel .green-button {
+  width: max-content;
+}

@@ -1,0 +1,28 @@
+.app-shell {
+  display: flex;
+  min-height: 100svh;
+  background: var(--page);
+}
+
+.main-column {
+  min-width: 0;
+  flex: 1;
+}
+
+.content-area {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 36px 52px;
+}
+
+@media (max-width: 760px) {
+  .content-area {
+    padding: 24px 18px 36px;
+  }
+}
+
+@media (max-width: 500px) {
+  .content-area {
+    padding-inline: 12px;
+  }
+}

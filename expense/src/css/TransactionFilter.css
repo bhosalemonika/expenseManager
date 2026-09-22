@@ -1,0 +1,34 @@
+.filter-row {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.filter-row select {
+  width: 150px;
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #f0f3f7;
+  color: #435064;
+  font-size: 14px;
+}
+
+.filter-row .outline-button {
+  min-height: 38px;
+  padding-inline: 12px;
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .filter-row {
+    flex-wrap: wrap;
+  }
+
+  .filter-row select {
+    flex: 1;
+  }
+}

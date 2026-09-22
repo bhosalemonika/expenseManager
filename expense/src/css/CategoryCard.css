@@ -1,0 +1,23 @@
+.category-card {
+  min-height: 140px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.category-card h3 {
+  margin: 14px 0 4px;
+  font-size: 19px;
+}
+
+.category-card small {
+  color: var(--green-dark);
+  font-size: 14px;
+}
+
+.category-card .card-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}

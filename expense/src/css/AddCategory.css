@@ -1,0 +1,33 @@
+.add-category-page {
+  max-width: 620px;
+}
+
+.back-link {
+  margin: 0 0 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.category-heading {
+  margin-bottom: 18px;
+}
+
+.category-heading h2 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.category-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}

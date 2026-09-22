@@ -1,0 +1,11 @@
+.recent-transactions {
+  width: 100%;
+}
+
+.recent-transactions .table-wrap {
+  border-radius: 0;
+}
+.text-link{
+  font-size: 14px;
+  font-weight: 600;
+}

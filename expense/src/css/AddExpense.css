@@ -1,0 +1,11 @@
+.add-expense-page {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.add-expense-page .page-heading {
+  justify-content: flex-start;
+}
+.p{
+  font-size: 13px;
+}

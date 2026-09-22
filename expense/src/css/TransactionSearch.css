@@ -1,0 +1,22 @@
+.transaction-search {
+  flex: 1;
+  min-width: 210px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  outline: 0;
+  background: #f0f3f7;
+  color: #435064;
+  font-size: 14px;
+}
+
+.transaction-search:focus {
+  box-shadow: 0 0 0 2px rgba(13, 165, 112, 0.2);
+}
+
+@media (max-width: 500px) {
+  .transaction-search {
+    flex-basis: 100%;
+  }
+}

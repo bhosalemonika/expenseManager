@@ -1,0 +1,189 @@
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+  color: #273247;
+}
+.expense-table th {
+  height: 32px;
+  padding: 0 14px;
+  background: #f1f2ff;
+  color: #68738c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+}
+
+
+.expense-table th:nth-child(1),
+.expense-table td:nth-child(1) {
+  width: 19%;
+}
+
+.expense-table th:nth-child(2),
+.expense-table td:nth-child(2) {
+  width: 29%;
+}
+
+.expense-table th:nth-child(3),
+.expense-table td:nth-child(3) {
+  width: 20%;
+}
+
+.expense-table th:nth-child(4),
+.expense-table td:nth-child(4) {
+  width: 18%;
+}
+
+.expense-table th:nth-child(5),
+.expense-table td:nth-child(5) {
+  width: 17%;
+}
+
+
+.expense-table td {
+  height: 42px;
+  padding: 0 14px;
+  border-bottom: 1px solid #eeeeee;
+  vertical-align: middle;
+}
+
+.expense-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+
+.merchant-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.merchant-cell img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.merchant-cell b {
+  font-size: 14px;
+  font-weight: 600;
+  color: #273247;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-cell {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.category-cell.food {
+  background: #fff0e8;
+  color: #f0642e;
+}
+
+.category-cell.education {
+  background: #eaf1ff;
+  color: #3d72df;
+}
+
+.category-cell.income-category {
+  background: #e7f7ee;
+  color: #15945f;
+}
+
+.category-cell.housing {
+  background: #f3eaff;
+  color: #8a45d6;
+}
+
+.category-cell.groceries {
+  background: #fff8df;
+  color: #c99100;
+}
+
+.category-cell.entertainment {
+  background: #ffeaf4;
+  color: #e8438a;
+}
+
+.category-cell.transport {
+  background: #e6f9fc;
+  color: #159bb0;
+}
+
+.category-cell.shopping {
+  background: #f0f2f5;
+  color: #56616f;
+}
+
+.category-cell.default-category {
+  background: #f0f2f5;
+  color: #56616f;
+}
+/* Amount */
+
+.income {
+  color: #079b63;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.expense-amount {
+  color: #e53935;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Actions */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-button {
+  width: 22px;
+  height: 22px;
+  padding: 2px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.icon-button img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.icon-button:hover {
+  opacity: 0.65;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+  .expense-table {
+    min-width: 650px;
+  }
+}
