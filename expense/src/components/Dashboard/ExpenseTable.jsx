@@ -3,13 +3,10 @@ import {
   getCategoryIconSrc,
   getCategoryName,
 } from "../../data/categoryData";
+import { formatMoney } from "../../data/settingsData";
+import { useSettings } from "../../hooks/useSettings";
 import "../../css/ExpenseTable.css";
-function formatMoney(value) {
-  return `₹${Number(value).toLocaleString("en-IN", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}`;
-}
+
 function getCategoryClass(category) {
   if (category === "Food & Dining") return "food";
   if (category === "Education") return "education";
@@ -24,6 +21,8 @@ function getCategoryClass(category) {
 }
 
 function ExpenseTable({ categories = [], expenses, onRemove, onEdit }) {
+  const [settings] = useSettings();
+
   return (
     <div className="table-wrap">
       <table className="expense-table">
@@ -72,7 +71,7 @@ function ExpenseTable({ categories = [], expenses, onRemove, onEdit }) {
 
                 <td className={expense.income ? "income" : "expense-amount"}>
                   {expense.income ? "+" : "-"}
-                  {formatMoney(expense.amount)}
+                  {formatMoney(expense.amount, settings.currency)}
                 </td>
 
                 <td>

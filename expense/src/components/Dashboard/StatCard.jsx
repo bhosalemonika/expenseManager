@@ -1,11 +1,14 @@
-import { getCategoryColor, getCategoryIconSrc, getCategoryName } from '../../data/categoryData'
+import {
+  getCategoryColor,
+  getCategoryIconSrc,
+  getCategoryName,
+} from '../../data/categoryData'
+import { formatMoney } from '../../data/settingsData'
+import { useSettings } from '../../hooks/useSettings'
 import '../../css/StatCard.css'
 
-function formatMoney(value) {
-  return `₹${value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-}
-
 function StatCard({ category, expenses }) {
+  const [settings] = useSettings()
   const categoryName = getCategoryName(category)
   const categoryTotal = expenses
     .filter((expense) => expense.category === categoryName && !expense.income)
@@ -24,7 +27,7 @@ function StatCard({ category, expenses }) {
         alt=""
       />
       <small>{categoryName}</small>
-      <strong>{formatMoney(categoryTotal)}</strong>
+      <strong>{formatMoney(categoryTotal, settings.currency)}</strong>
       <em>
         {count} transaction{count === 1 ? '' : 's'}
       </em>

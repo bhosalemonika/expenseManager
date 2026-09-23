@@ -5,7 +5,7 @@ function TransactionFilter({ search, onSearchChange, period, onPeriodChange, cat
   return (
     <div className="filter-row">
       <TransactionSearch value={search} onChange={onSearchChange} />
-      <select value={period} onChange={(event) => onPeriodChange(event.target.value)}>
+      <select value={period} onChange={(event) => onPeriodChange(event.target.value)}   className="period-select">
         <option value="all">All Time</option>
         <option value="30">Last 30 Days</option>
         <option value="90">Last 90 Days</option>

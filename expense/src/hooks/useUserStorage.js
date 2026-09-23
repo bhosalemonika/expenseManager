@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { defaultCategories, getCategoryName } from '../data/categoryData'
 
 const DATA_KEY = 'expense-manager-data'
 const CURRENT_USER_KEY = 'expense-manager-current-user-email'
+const USER_STORAGE_EVENT = 'expense-manager-user-storage-change'
+const starterExpenses = []
 
 function read(key, fallback) {
   try {
@@ -35,6 +37,38 @@ function getData() {
 
 function saveData(data) {
   save(DATA_KEY, data)
+}
+
+// function emitStorageChange(section) {
+//   if (typeof window === 'undefined') return
+
+//   queueMicrotask(() => {
+//     window.dispatchEvent(
+//       new CustomEvent(USER_STORAGE_EVENT, {
+//         detail: { section },
+//       }),
+//     )
+//   })
+// }
+
+function requireEmail(profile) {
+  const email = normalizeUserEmail(profile?.email)
+
+  if (!email) {
+    throw new Error('Please enter a valid email address.')
+  }
+
+  return email
+}
+
+function requirePassword(profile) {
+  const password = String(profile?.password || '')
+
+  if (!password.trim()) {
+    throw new Error('Please enter your password.')
+  }
+
+  return password
 }
 
 function getProfile(email, profile = {}) {
@@ -90,11 +124,9 @@ function getExpenses(groupedExpenses) {
 function createUser(email, profile = {}) {
   return {
     isLoggedIn: false,
-
+    password: profile.password || '',
     profile: getProfile(email, profile),
-
     categories: copy(defaultCategories),
-
     expensesByCategory: groupExpenses(
       starterExpenses,
       defaultCategories
@@ -117,16 +149,13 @@ function getUser(data, email, profile = {}) {
   }
 
   user.categories ||= copy(defaultCategories)
-
   if (!user.expensesByCategory) {
     user.expensesByCategory = groupExpenses(
       user.expenses || starterExpenses,
       user.categories
     )
   }
-
   delete user.expenses
-
   return user
 }
 
@@ -140,14 +169,11 @@ export function getCurrentUserEmail() {
   const email = normalizeUserEmail(
     localStorage.getItem(CURRENT_USER_KEY)
   )
-
   const data = getData()
-
   if (!email) {
     const loggedInUser = Object.keys(data.users).find(
       (email) => data.users[email].isLoggedIn
     )
-
     if (loggedInUser) {
       localStorage.setItem(CURRENT_USER_KEY, loggedInUser)
       return loggedInUser
@@ -170,14 +196,14 @@ export function getCurrentUserEmail() {
 }
 
 export function ensureUserAccount(profile, options = {}) {
-  const email = normalizeUserEmail(profile?.email)
-
-  if (!email) {
-    throw new Error('A user email is required.')
-  }
+  const email = requireEmail(profile)
 
   const data = getData()
   const user = getUser(data, email, profile)
+
+  if (profile?.password) {
+    user.password = profile.password
+  }
 
   if (options.setCurrent !== false) {
     setLogin(data, email)
@@ -186,6 +212,62 @@ export function ensureUserAccount(profile, options = {}) {
     user.isLoggedIn = false
   }
 
+  saveData(data)
+
+  return user
+}
+
+export function registerUserAccount(profile) {
+  const email = requireEmail(profile)
+  const password = requirePassword(profile)
+  const name = String(profile?.name || '').trim()
+
+  if (!name) {
+    throw new Error('Please enter your name.')
+  }
+
+  const data = getData()
+
+  if (data.users[email]) {
+    throw new Error('An account already exists. Please sign in.')
+  }
+
+  data.users[email] = createUser(email, {
+    ...profile,
+    email,
+    name,
+    password,
+  })
+
+  data.users[email].isLoggedIn = false
+  saveData(data)
+  localStorage.removeItem(CURRENT_USER_KEY)
+
+  return data.users[email]
+}
+
+export function signInUserAccount(profile) {
+  const email = requireEmail(profile)
+  const password = requirePassword(profile)
+  const data = getData()
+
+  if (!data.users[email]) {
+    throw new Error('No account found. Please sign up first.')
+  }
+
+  const user = getUser(data, email)
+  const savedPassword = user.password || user.auth?.password || ''
+
+  if (savedPassword && savedPassword !== password) {
+    throw new Error('Incorrect password. Please try again.')
+  }
+
+  if (!savedPassword) {
+    user.password = password
+  }
+
+  setLogin(data, email)
+  localStorage.setItem(CURRENT_USER_KEY, email)
   saveData(data)
 
   return user
@@ -243,9 +325,7 @@ export function readCurrentUserSection(section, initialValue) {
       initialValue
     )
   }
-
   saveData(data)
-
   return user[section]
 }
 
@@ -276,6 +356,7 @@ export function writeCurrentUserSection(section, value) {
   }
 
   saveData(data)
+ // emitStorageChange(section)
 
   return section === 'expenses'
     ? getExpenses(user.expensesByCategory)
@@ -286,6 +367,35 @@ export function useUserStorage(section, initialValue) {
   const [value, setValue] = useState(() =>
     readCurrentUserSection(section, initialValue)
   )
+
+  useEffect(() => {
+    function refresh(event) {
+      if (event.type === USER_STORAGE_EVENT) {
+        const changedSection = event.detail?.section
+
+        if (changedSection && changedSection !== section) return
+      }
+
+      if (
+        event.type === 'storage' &&
+        event.key &&
+        event.key !== DATA_KEY &&
+        event.key !== CURRENT_USER_KEY
+      ) {
+        return
+      }
+
+      setValue(readCurrentUserSection(section, initialValue))
+    }
+
+    // window.addEventListener(USER_STORAGE_EVENT, refresh)
+    // window.addEventListener('storage', refresh)
+
+    return () => {
+      window.removeEventListener(USER_STORAGE_EVENT, refresh)
+      window.removeEventListener('storage', refresh)
+    }
+  }, [section, initialValue])
 
   function updateValue(newValue) {
     setValue((oldValue) => {

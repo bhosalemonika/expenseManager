@@ -57,19 +57,14 @@ export function normalizeCategory(category) {
   if (typeof category === "string") {
     const name = category.trim();
     const defaults = defaultsByName.get(name.toLowerCase());
-
     if (defaults) return { ...defaults };
-
     return { name, icon: "dining", color: "#0da570" };
   }
 
   if (!category || typeof category !== "object") return null;
-
   const name = String(category.name || category.label || "").trim();
   if (!name) return null;
-
   const defaults = defaultsByName.get(name.toLowerCase()) || {};
-
   return {
     name,
     icon: category.icon || defaults.icon || "dining",

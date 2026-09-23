@@ -65,6 +65,7 @@ function AddExpense({ setPage }) {
           expense={editingExpense}
           onSave={handleSave}
           onCancel={handleCancel}
+          setPage={setPage}
         />
       </div>
     </AppShell>

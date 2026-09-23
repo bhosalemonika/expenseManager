@@ -166,8 +166,19 @@
 
 .form-message {
   margin: 16px 0 0;
-  color: #087f58;
   text-align: center;
+}
+
+.form-message.info {
+  color: #4e5a69;
+}
+
+.form-message.success {
+  color: #087f58;
+}
+
+.form-message.error {
+  color: #df2e2e;
 }
 
 .switch-copy {

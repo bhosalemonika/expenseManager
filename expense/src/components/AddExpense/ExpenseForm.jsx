@@ -10,7 +10,7 @@ function makeForm(expense, category) {
   }
 }
 
-function ExpenseForm({ categories, expense, onSave, onCancel }) {
+function ExpenseForm({ categories, expense, onSave, onCancel,setPage,}) {
   const firstCategory = categories[0] || 'Food & Dining'
   const [form, setForm] = useState(() => makeForm(expense, firstCategory))
   const [saved, setSaved] = useState(false)
@@ -25,13 +25,9 @@ function ExpenseForm({ categories, expense, onSave, onCancel }) {
   }
 
   function submit(event) {
-    event.preventDefault()
-    onSave({ ...form, amount: Number(form.amount) })
-    setSaved(true)
-
-    if (!expense) {
-      setForm(makeForm(null, firstCategory))
-    }
+   event.preventDefault()
+    onSave({ ...form, amount: Number(form.amount), })
+     if (!expense) { setPage('dashboard') }
   }
 
   return (

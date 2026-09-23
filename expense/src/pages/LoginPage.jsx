@@ -3,46 +3,60 @@ import expenseLogo from '../assets/Images/expense.png'
 import googleIcon from '../assets/icon/google.png'
 import lockIcon from '../assets/icon/uil_lock.png'
 import userIcon from '../assets/icon/user.png'
-import { ensureUserAccount } from '../hooks/useUserStorage'
+import {
+  registerUserAccount,
+  signInUserAccount,
+} from '../hooks/useUserStorage'
 import '../css/LoginPage.css'
 
-function LoginPage({setPage }) {
+function LoginPage({ setPage }) {
   const [isSignUp, setIsSignUp] = useState(false)
   const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState('info')
+
+  function showMessage(text, type = 'info') {
+    setMessage(text)
+    setMessageType(type)
+  }
 
   function handleSubmit(event) {
     event.preventDefault()
 
     const form = new FormData(event.currentTarget)
     const profile = {
-      name: form.get('name')?.toString().trim(),
-      email: form.get('email')?.toString().trim(),
+      name: form.get('name')?.toString().trim() || '',
+      email: form.get('email')?.toString().trim() || '',
+      password: form.get('password')?.toString() || '',
     }
 
     try {
       if (isSignUp) {
-        ensureUserAccount(profile, { setCurrent: false })
+        registerUserAccount(profile)
+        event.currentTarget.reset()
         setIsSignUp(false)
-        setMessage('Account created successfully. Please sign in.')
+        showMessage('Account created successfully. Please sign in.', 'success')
         return
       }
 
-      ensureUserAccount(profile)
+      signInUserAccount(profile)
       setPage('dashboard')
-    } catch {
-      setMessage('Please enter a valid email address.')
+    } catch (error) {
+      showMessage(
+        error.message || 'Something went wrong. Please try again.',
+        'error',
+      )
     }
   }
 
   function switchMode() {
     setIsSignUp(!isSignUp)
     setMessage('')
+    setMessageType('info')
   }
 
   return (
     <main className="auth-page">
       <section className="auth-shell" aria-label="Expense Manager account access">
-
         <header className="brand">
           <img className="brand-logo" src={expenseLogo} alt="Expense Manager" />
           <h1>Expense Manager</h1>
@@ -62,6 +76,7 @@ function LoginPage({setPage }) {
                     name="name"
                     type="text"
                     placeholder="John Doe"
+                    autoComplete="name"
                     required
                   />
                 </div>
@@ -74,6 +89,7 @@ function LoginPage({setPage }) {
                     name="email"
                     type="email"
                     placeholder="john@example.com"
+                    autoComplete="email"
                     required
                   />
                 </div>
@@ -90,6 +106,7 @@ function LoginPage({setPage }) {
                     name="email"
                     type="email"
                     placeholder="john@example.com"
+                    autoComplete="email"
                     required
                   />
                 </div>
@@ -103,7 +120,9 @@ function LoginPage({setPage }) {
                 <button
                   className="text-button"
                   type="button"
-                  onClick={() => setMessage('Password reset is not connected yet.')}
+                  onClick={() =>
+                    showMessage('Password reset is not connected yet.')
+                  }
                 >
                   Forgot Password?
                 </button>
@@ -116,7 +135,8 @@ function LoginPage({setPage }) {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="••••••••••"
+                placeholder="Password"
+                autoComplete={isSignUp ? 'new-password' : 'current-password'}
                 required
               />
             </div>
@@ -131,14 +151,13 @@ function LoginPage({setPage }) {
             <button className="primary-button" type="submit">
               {isSignUp ? 'Sign Up' : 'Sign In'}
             </button>
-
           </form>
 
           {!isSignUp && (
             <button
               className="google-button"
               type="button"
-              onClick={() => setMessage('Google sign-in is not connected yet.')}
+              onClick={() => showMessage('Google sign-in is not connected yet.')}
             >
               <img src={googleIcon} alt="" />
               Sign in with Google
@@ -146,11 +165,10 @@ function LoginPage({setPage }) {
           )}
 
           {message && (
-            <p className="form-message" role="status">
+            <p className={`form-message ${messageType}`} role="status">
               {message}
             </p>
           )}
-
         </div>
 
         <p className="switch-copy">
@@ -164,7 +182,6 @@ function LoginPage({setPage }) {
             {isSignUp ? 'Sign In' : 'Sign Up for Free'}
           </button>
         </p>
-
       </section>
     </main>
   )

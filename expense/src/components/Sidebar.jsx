@@ -9,18 +9,14 @@ function Sidebar({ page, setPage, onLogout }) {
       localStorage.removeItem('expense-manager-editing-expense')
       localStorage.removeItem('editingExpense')
     }
-
     setPage(pageId)
   }
-
   return (
     <aside className="sidebar">
-
     <div className="sidebar-brand">
   <img src={expenseLogo} alt="Expense Manager"  className='img-side'/>
   Expense Manager
 </div>
-
       <nav>
         {navigationItems.map((item) => (
           <button

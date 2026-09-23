@@ -42,11 +42,62 @@
   gap: 16px;
 }
 
-.topbar-actions > img:first-child {
+.notification-button {
+  position: relative;
   width: 30px;
   height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0;
+}
+
+.notification-button:hover,
+.notification-button.active {
+  background: #eef9f4;
+}
+
+.notification-button img {
+  width: 20px;
+  height: 25px;
   object-fit: contain;
   padding-top: 3px;
+}
+
+.topbar-notification-badge {
+  position: absolute;
+  top: 2px;
+  right: -4px;
+  min-width: 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0 3px;
+}
+
+.profile-button {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  padding: 2px;
+}
+
+.profile-button:hover,
+.profile-button.active {
+  background: #eef9f4;
 }
 
 .avatar {

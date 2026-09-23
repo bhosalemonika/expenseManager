@@ -6,16 +6,22 @@
 }
 
 .filter-row select {
-  width: 150px;
+  width: 180px;
   min-width: 0;
   min-height: 38px;
-  padding: 0 10px;
+  padding: 10px 20px 10px 18px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: #f0f3f7;
   color: #435064;
   font-size: 14px;
+  overflow-wrap: wrap;
 }
+.period-select {
+  width: 160px;
+  padding-right: 90px;
+}
+
 
 .filter-row .outline-button {
   min-height: 38px;

@@ -11,8 +11,6 @@ function CategoryForm({ existingCategories, onSave, onCancel }) {
   const [message, setMessage] = useState('')
 
 
-  
-
   function submit(event) {
     event.preventDefault()
     const categoryName = name.trim()

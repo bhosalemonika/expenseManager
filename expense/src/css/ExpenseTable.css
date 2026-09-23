@@ -49,7 +49,7 @@
 
 
 .expense-table td {
-  height: 42px;
+  height: 48px;
   padding: 0 14px;
   border-bottom: 1px solid #eeeeee;
   vertical-align: middle;
@@ -75,7 +75,7 @@
 }
 
 .merchant-cell b {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #273247;
   white-space: nowrap;
@@ -86,9 +86,9 @@
 .category-cell {
   display: inline-flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 8px 12px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
